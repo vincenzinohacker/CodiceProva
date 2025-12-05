@@ -86,6 +86,12 @@
                     <input type="text" id="yourName" placeholder="Es. Marco"
                         class="w-full bg-gray-100 border-2 border-transparent focus:border-purple-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
                 </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">La tua data
+                        di nascita</label>
+                    <input type="date" id="yourBirthDate"
+                        class="w-full bg-gray-100 border-2 border-transparent focus:border-purple-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
+                </div>
 
                 <button onclick="analizza()"
                     class="w-full bg-black text-white font-bold py-4 rounded-xl mt-4 hover:scale-[1.02] active:scale-95 transition-transform shadow-lg flex items-center justify-center gap-2">
@@ -129,6 +135,13 @@
                     class="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl p-5 border border-purple-200 text-center">
                     <h3 class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-2">Compatibilità Totale
                     </h3>
+
+                    <div class="flex justify-center items-center gap-2 mb-2 text-sm text-gray-600 font-semibold">
+                        <span><i class="fas fa-venus text-pink-500"></i> <span id="displayHerZodiac"></span></span>
+                        <span>⚡</span>
+                        <span><i class="fas fa-mars text-blue-500"></i> <span id="displayYourZodiac"></span></span>
+                    </div>
+
                     <div
                         class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
                         <span id="score">0</span>%
@@ -278,18 +291,21 @@
             const herName = document.getElementById('herName').value.trim();
             const herBirthDateValue = document.getElementById('herBirthDate').value;
             const yourName = document.getElementById('yourName').value.trim();
+            const yourBirthDateValue = document.getElementById('yourBirthDate').value;
 
-            if (!herName || !yourName || !herBirthDateValue) {
-                alert("Devi inserire tutti i dati, astro-genio! Anche la data! 📅");
+            if (!herName || !yourName || !herBirthDateValue || !yourBirthDateValue) {
+                alert("Devi inserire TUTTI i dati! Date comprese! 📅");
                 return;
             }
 
-            const dateObj = new Date(herBirthDateValue);
-            const day = dateObj.getDate();
-            const month = dateObj.getMonth() + 1; // Gennaio è 0!
+            // Lei
+            const dateObjHer = new Date(herBirthDateValue);
+            const herZodiac = getZodiacSign(dateObjHer.getDate(), dateObjHer.getMonth() + 1);
+            const herZodiacKey = getZodiacKey(dateObjHer.getDate(), dateObjHer.getMonth() + 1);
 
-            const herZodiac = getZodiacSign(day, month);
-            const herZodiacKey = getZodiacKey(day, month);
+            // Lui
+            const dateObjYou = new Date(yourBirthDateValue);
+            const yourZodiac = getZodiacSign(dateObjYou.getDate(), dateObjYou.getMonth() + 1);
 
             // UI Switch
             document.getElementById('inputSection').classList.add('hidden');
@@ -297,16 +313,19 @@
 
             // Simula attesa calcolo
             setTimeout(() => {
-                showResults(herName, herZodiac, herZodiacKey, yourName);
+                showResults(herName, herZodiac, herZodiacKey, yourName, yourZodiac);
             }, 2000);
         }
 
-        function showResults(herName, herZodiac, herZodiacKey, yourName) {
+        function showResults(herName, herZodiac, herZodiacKey, yourName, yourZodiac) {
             document.getElementById('loading').classList.add('hidden');
             document.getElementById('resultSection').classList.remove('hidden');
 
             document.getElementById('resHerName').innerText = herName;
             document.getElementById('resHerZodiac').innerText = herZodiac;
+
+            document.getElementById('displayHerZodiac').innerText = herZodiac;
+            document.getElementById('displayYourZodiac').innerText = yourZodiac;
 
             // 1. Genera caratteristiche basate sul nome di lei
             const hashLei = stringToHash(herName.toLowerCase());
@@ -390,12 +409,14 @@
             const herName = document.getElementById('herName').value.trim();
             const herBirthDateValue = document.getElementById('herBirthDate').value;
             const yourName = document.getElementById('yourName').value.trim();
+            const yourBirthDateValue = document.getElementById('yourBirthDate').value;
 
             // Encode params
             const params = new URLSearchParams({
                 h: herName,
                 d: herBirthDateValue,
-                y: yourName
+                y: yourName,
+                yd: yourBirthDateValue
             });
 
             const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
@@ -436,11 +457,13 @@
             const h = params.get('h');
             const d = params.get('d');
             const y = params.get('y');
+            const yd = params.get('yd');
 
-            if (h && d && y) {
+            if (h && d && y && yd) {
                 document.getElementById('herName').value = h;
                 document.getElementById('herBirthDate').value = d;
                 document.getElementById('yourName').value = y;
+                document.getElementById('yourBirthDate').value = yd;
                 // Auto run
                 analizza();
             }
