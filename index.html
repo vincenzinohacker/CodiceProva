@@ -113,6 +113,17 @@
                     </ul>
                 </div>
 
+                <!-- Flags Section -->
+                <div id="flagsSection"></div>
+
+                <!-- Pickup Line Section -->
+                <div class="mt-4 bg-yellow-50 p-4 rounded-xl border border-yellow-200 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-6xl">💡</div>
+                    <p class="text-xs text-yellow-600 font-bold uppercase tracking-wider mb-2">Rimorchio Assistito (IA)
+                    </p>
+                    <p id="pickupLine" class="text-gray-800 italic font-medium text-center text-sm">...</p>
+                </div>
+
                 <!-- Card Compatibilità -->
                 <div
                     class="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl p-5 border border-purple-200 text-center">
@@ -128,6 +139,11 @@
                     </div>
                     <p id="verdict" class="text-sm font-bold text-gray-600 italic">"..."</p>
                 </div>
+
+                <button onclick="shareResult()"
+                    class="w-full mt-4 bg-green-500 text-white font-bold py-3 rounded-xl hover:bg-green-600 transition-colors shadow-md flex items-center justify-center gap-2">
+                    <i class="fab fa-whatsapp"></i> Condividi Risultato
+                </button>
 
                 <button onclick="reset()"
                     class="w-full mt-6 text-gray-400 text-sm hover:text-gray-600 underline">Riprova con
@@ -159,6 +175,43 @@
             "Si veste meglio di te anche in pigiama 👑",
             "Ride alle battute squallide 😂"
         ];
+
+        const redFlags = [
+            "Mastica a bocca aperta 🚩",
+            "Parla solo di sé 🚩",
+            "Non ti chiede mai 'come stai?' 🚩",
+            "Tratta male i camerieri 🚩",
+            "Ha ancora le foto con l'ex sul profilo 🚩",
+            "Non gli/le piacciono i cani 🚩",
+            "Non mette la freccia in rotonda 🚩",
+            "Scrive 'pk' invece di 'perché' 🚩"
+        ];
+
+        const greenFlags = [
+            "Ti porta il caffè a letto 💚",
+            "Risponde subito ai messaggi 💚",
+            "Va d'accordo con tua mamma 💚",
+            "Ti supporta nei tuoi sogni 💚",
+            "Cucina da Dio 💚",
+            "Ti fa ridere fino alle lacrime 💚",
+            "Si ricorda i dettagli che racconti 💚",
+            "Profuma sempre di buono 💚"
+        ];
+
+        const zodiacPickupLines = {
+            'aries': "Sei un Ariete? Perché sei un fuoco che non riesco a spegnere. 🔥",
+            'taurus': "Sei Toro? Perché con te farei maratona di serie TV e cibo per sempre. 🍕",
+            'gemini': "Sei Gemelli? Meno male, perché mi piaci in tutte le tue versioni. 👯‍♀️",
+            'cancer': "Sei Cancro? Perché mi sento a casa quando sono con te. 🏠",
+            'leo': "Sei Leone? Perché brilli più del sole (e lo sai). ☀️",
+            'virgo': "Sei Vergine? Perché sei l'unica cosa perfetta nella mia vita disordinata. 🧹",
+            'libra': "Sei Bilancia? Perché sei l'equilibrio che mi mancava. ⚖️",
+            'scorpio': "Sei Scorpione? Perché sei un mistero che voglio risolvere. 🕵️‍♂️",
+            'sagittarius': "Sei Sagittario? Perché con te andrei in capo al mondo. 🌍",
+            'capricorn': "Sei Capricorno? Perché sei un investimento sicuro per il mio cuore. 📈",
+            'aquarius': "Sei Acquario? Perché sei fuori da questo mondo. 👽",
+            'pisces': "Sei Pesci? Perché mi sono perso nei tuoi occhi (e nel tuo delirio). 🌊"
+        };
 
         // Funzione per generare un numero "fisso" da una stringa
         // Serve per dare sempre lo stesso risultato per lo stesso nome
@@ -205,6 +258,22 @@
             return "❓ Mistero";
         }
 
+        function getZodiacKey(day, month) {
+            if ((month == 1 && day <= 19) || (month == 12 && day >= 22)) return 'capricorn';
+            if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return 'aquarius';
+            if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return 'pisces';
+            if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return 'aries';
+            if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return 'taurus';
+            if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return 'gemini';
+            if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return 'cancer';
+            if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return 'leo';
+            if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return 'virgo';
+            if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return 'libra';
+            if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return 'scorpio';
+            if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return 'sagittarius';
+            return 'aries'; // Default
+        }
+
         function analizza() {
             const herName = document.getElementById('herName').value.trim();
             const herBirthDateValue = document.getElementById('herBirthDate').value;
@@ -220,6 +289,7 @@
             const month = dateObj.getMonth() + 1; // Gennaio è 0!
 
             const herZodiac = getZodiacSign(day, month);
+            const herZodiacKey = getZodiacKey(day, month);
 
             // UI Switch
             document.getElementById('inputSection').classList.add('hidden');
@@ -227,11 +297,11 @@
 
             // Simula attesa calcolo
             setTimeout(() => {
-                showResults(herName, herZodiac, yourName);
+                showResults(herName, herZodiac, herZodiacKey, yourName);
             }, 2000);
         }
 
-        function showResults(herName, herZodiac, yourName) {
+        function showResults(herName, herZodiac, herZodiacKey, yourName) {
             document.getElementById('loading').classList.add('hidden');
             document.getElementById('resultSection').classList.remove('hidden');
 
@@ -252,13 +322,36 @@
                 possibleTraits[index1],
                 possibleTraits[index2 === index1 ? (index2 + 1) % possibleTraits.length : index2],
                 possibleTraits[index3]
-            ]; // Evita duplicati banali
+            ];
 
             selectedTraits.forEach(trait => {
                 const li = document.createElement('li');
                 li.innerHTML = `<i class="fas fa-check text-pink-400 mr-2"></i> ${trait}`;
                 list.appendChild(li);
             });
+
+            // RED FLAG / GREEN FLAG
+            const indexRed = (hashLei * 2) % redFlags.length;
+            const indexGreen = (hashLei * 3) % greenFlags.length;
+
+            const flagsDiv = document.getElementById('flagsSection');
+            flagsDiv.innerHTML = `
+                <div class="mt-4 grid grid-cols-2 gap-3">
+                    <div class="bg-red-50 p-3 rounded-xl border border-red-200">
+                        <p class="text-xs text-red-500 font-bold uppercase mb-1">Red Flag 🚩</p>
+                        <p class="text-sm text-gray-700 font-medium">${redFlags[indexRed]}</p>
+                    </div>
+                     <div class="bg-green-50 p-3 rounded-xl border border-green-200">
+                        <p class="text-xs text-green-500 font-bold uppercase mb-1">Green Flag 💚</p>
+                        <p class="text-sm text-gray-700 font-medium">${greenFlags[indexGreen]}</p>
+                    </div>
+                </div>
+            `;
+
+            // PICKUP LINE
+            const pickupLine = zodiacPickupLines[herZodiacKey];
+            document.getElementById('pickupLine').innerText = `"${pickupLine}"`;
+
 
             // 2. Calcola compatibilità basata sulla combinazione dei nomi
             const combinedHash = stringToHash((herName + yourName).toLowerCase());
@@ -291,6 +384,27 @@
                 }
             };
             window.requestAnimationFrame(step);
+        }
+
+        function shareResult() {
+            const score = document.getElementById('score').innerText;
+            const verdict = document.getElementById('verdict').innerText;
+            const text = `Ho calcolato la compatibilità su Love & Vibes! 💘\nRisultato: ${score}%\nVerdetto: ${verdict}\n\nScopri il tuo!`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Love & Vibes Result',
+                    text: text,
+                    url: window.location.href,
+                })
+                    .then(() => console.log('Successful share'))
+                    .catch((error) => console.log('Error sharing', error));
+            } else {
+                // Fallback: copia negli appunti
+                navigator.clipboard.writeText(text).then(() => {
+                    alert("Risultato copiato negli appunti! Incollalo dove vuoi. 📋");
+                });
+            }
         }
 
         function reset() {
