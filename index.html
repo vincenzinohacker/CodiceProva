@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,26 +9,58 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
-        body { font-family: 'Poppins', sans-serif; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
         .glass {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        .heart-beat { animation: beat 1s infinite alternate; }
-        @keyframes beat { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+        .heart-beat {
+            animation: beat 1s infinite alternate;
+        }
+
+        @keyframes beat {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.1);
+            }
+        }
+
         /* Animazione per i risultati */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 min-h-screen flex items-center justify-center p-4">
+
+<body
+    class="bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 min-h-screen flex items-center justify-center p-4">
 
     <div class="glass max-w-md w-full rounded-3xl shadow-2xl overflow-hidden relative">
         <!-- Decorazioni sfondo -->
         <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500"></div>
-        
+
         <div class="p-8 text-center">
             <h1 class="text-3xl font-extrabold text-gray-800 mb-2">💘 Love & Vibes</h1>
             <p class="text-gray-500 text-sm mb-6">L'oracolo digitale non sbaglia mai.</p>
@@ -35,20 +68,27 @@
             <!-- Input Section -->
             <div class="space-y-4 text-left" id="inputSection">
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">Il nome di lei</label>
-                    <input type="text" id="herName" placeholder="Es. Giulia" class="w-full bg-gray-100 border-2 border-transparent focus:border-pink-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mt-3 mb-1 ml-1">Data di nascita di lei</label>
-                    <input type="date" id="herDob" class="w-full bg-gray-100 border-2 border-transparent focus:border-pink-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
-                </div>
-                
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">Il tuo nome</label>
-                    <input type="text" id="yourName" placeholder="Es. Marco" class="w-full bg-gray-100 border-2 border-transparent focus:border-purple-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mt-3 mb-1 ml-1">La tua data di nascita</label>
-                    <input type="date" id="yourDob" class="w-full bg-gray-100 border-2 border-transparent focus:border-purple-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">Il nome di
+                        lei</label>
+                    <input type="text" id="herName" placeholder="Es. Giulia"
+                        class="w-full bg-gray-100 border-2 border-transparent focus:border-pink-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
                 </div>
 
-                <button onclick="analizza()" class="w-full bg-black text-white font-bold py-4 rounded-xl mt-4 hover:scale-[1.02] active:scale-95 transition-transform shadow-lg flex items-center justify-center gap-2">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">La sua data
+                        di nascita</label>
+                    <input type="date" id="herBirthDate"
+                        class="w-full bg-gray-100 border-2 border-transparent focus:border-pink-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">Il tuo
+                        nome</label>
+                    <input type="text" id="yourName" placeholder="Es. Marco"
+                        class="w-full bg-gray-100 border-2 border-transparent focus:border-purple-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
+                </div>
+
+                <button onclick="analizza()"
+                    class="w-full bg-black text-white font-bold py-4 rounded-xl mt-4 hover:scale-[1.02] active:scale-95 transition-transform shadow-lg flex items-center justify-center gap-2">
                     <i class="fas fa-magic"></i> Analizza Vibes
                 </button>
             </div>
@@ -61,11 +101,12 @@
 
             <!-- Results Section (Nascosto) -->
             <div id="resultSection" class="hidden mt-6 text-left animate-fade-in">
-                
+
                 <!-- Card Lei -->
                 <div class="bg-pink-50 rounded-2xl p-5 border border-pink-100 mb-4">
                     <h3 class="font-bold text-pink-600 text-lg flex items-center gap-2">
-                        <i class="fas fa-user-circle"></i> <span id="resHerName">Lei</span> è tipo...
+                        <i class="fas fa-user-circle"></i> <span id="resHerName">Lei</span> (<span id="resHerZodiac"
+                            class="text-sm text-pink-400"></span>) è tipo...
                     </h3>
                     <ul id="traitsList" class="mt-3 space-y-2 text-sm text-gray-700 font-medium">
                         <!-- Traits injected here -->
@@ -73,18 +114,24 @@
                 </div>
 
                 <!-- Card Compatibilità -->
-                <div class="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl p-5 border border-purple-200 text-center">
-                    <h3 class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-2">Compatibilità Totale</h3>
-                    <div class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
+                <div
+                    class="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl p-5 border border-purple-200 text-center">
+                    <h3 class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-2">Compatibilità Totale
+                    </h3>
+                    <div
+                        class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
                         <span id="score">0</span>%
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2 overflow-hidden">
-                        <div id="progressBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-2.5 rounded-full" style="width: 0%"></div>
+                        <div id="progressBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-2.5 rounded-full"
+                            style="width: 0%"></div>
                     </div>
                     <p id="verdict" class="text-sm font-bold text-gray-600 italic">"..."</p>
                 </div>
 
-                <button onclick="reset()" class="w-full mt-6 text-gray-400 text-sm hover:text-gray-600 underline">Riprova con un'altra</button>
+                <button onclick="reset()"
+                    class="w-full mt-6 text-gray-400 text-sm hover:text-gray-600 underline">Riprova con
+                    un'altra</button>
             </div>
 
         </div>
@@ -126,16 +173,53 @@
             return Math.abs(hash);
         }
 
+        function getZodiacSign(day, month) {
+            const zodiacSigns = {
+                'capricorn': '♑ Capricorno',
+                'aquarius': '♒ Acquario',
+                'pisces': '♓ Pesci',
+                'aries': '♈ Ariete',
+                'taurus': '♉ Toro',
+                'gemini': '♊ Gemelli',
+                'cancer': '♋ Cancro',
+                'leo': '♌ Leone',
+                'virgo': '♍ Vergine',
+                'libra': '♎ Bilancia',
+                'scorpio': '♏ Scorpione',
+                'sagittarius': '♐ Sagittario'
+            };
+
+            if ((month == 1 && day <= 19) || (month == 12 && day >= 22)) return zodiacSigns['capricorn'];
+            if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return zodiacSigns['aquarius'];
+            if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return zodiacSigns['pisces'];
+            if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return zodiacSigns['aries'];
+            if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return zodiacSigns['taurus'];
+            if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return zodiacSigns['gemini'];
+            if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return zodiacSigns['cancer'];
+            if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return zodiacSigns['leo'];
+            if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return zodiacSigns['virgo'];
+            if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return zodiacSigns['libra'];
+            if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return zodiacSigns['scorpio'];
+            if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return zodiacSigns['sagittarius'];
+
+            return "❓ Mistero";
+        }
+
         function analizza() {
             const herName = document.getElementById('herName').value.trim();
+            const herBirthDateValue = document.getElementById('herBirthDate').value;
             const yourName = document.getElementById('yourName').value.trim();
-            const herDob = document.getElementById('herDob').value;
-            const yourDob = document.getElementById('yourDob').value;
 
-            if (!herName || !yourName || !herDob || !yourDob) {
-                alert("Devi inserire nomi e date di nascita, genio!");
+            if (!herName || !yourName || !herBirthDateValue) {
+                alert("Devi inserire tutti i dati, astro-genio! Anche la data! 📅");
                 return;
             }
+
+            const dateObj = new Date(herBirthDateValue);
+            const day = dateObj.getDate();
+            const month = dateObj.getMonth() + 1; // Gennaio è 0!
+
+            const herZodiac = getZodiacSign(day, month);
 
             // UI Switch
             document.getElementById('inputSection').classList.add('hidden');
@@ -143,30 +227,31 @@
 
             // Simula attesa calcolo
             setTimeout(() => {
-                showResults(herName, yourName, herDob, yourDob);
+                showResults(herName, herZodiac, yourName);
             }, 2000);
         }
 
-        function showResults(herName, yourName, herDob, yourDob) {
+        function showResults(herName, herZodiac, yourName) {
             document.getElementById('loading').classList.add('hidden');
             document.getElementById('resultSection').classList.remove('hidden');
 
             document.getElementById('resHerName').innerText = herName;
+            document.getElementById('resHerZodiac').innerText = herZodiac;
 
             // 1. Genera caratteristiche basate sul nome di lei
             const hashLei = stringToHash(herName.toLowerCase());
             const list = document.getElementById('traitsList');
             list.innerHTML = '';
-            
+
             // Seleziona 3 caratteristiche "pseudo-random" ma fisse per quel nome
             const index1 = hashLei % possibleTraits.length;
             const index2 = (hashLei * 7) % possibleTraits.length;
             const index3 = (hashLei * 13) % possibleTraits.length;
 
             const selectedTraits = [
-                possibleTraits[index1], 
-                possibleTraits[index2 === index1 ? (index2 + 1) % possibleTraits.length : index2], 
-                possibleTraits[index3] 
+                possibleTraits[index1],
+                possibleTraits[index2 === index1 ? (index2 + 1) % possibleTraits.length : index2],
+                possibleTraits[index3]
             ]; // Evita duplicati banali
 
             selectedTraits.forEach(trait => {
@@ -175,8 +260,8 @@
                 list.appendChild(li);
             });
 
-            // 2. Calcola compatibilità basata sulla combinazione dei nomi e delle date
-            const combinedHash = stringToHash((herName + herDob + yourName + yourDob).toLowerCase());
+            // 2. Calcola compatibilità basata sulla combinazione dei nomi
+            const combinedHash = stringToHash((herName + yourName).toLowerCase());
             const percentage = (combinedHash % 101); // 0 a 100
 
             // Anima il numero
@@ -190,7 +275,7 @@
             else if (percentage > 50) verdict = "Potrebbe funzionare, con impegno. 🤔";
             else if (percentage > 30) verdict = "Zona Friendzone pericolosa. ⚠️";
             else verdict = "Scappa finché sei in tempo. 🏃‍♂️";
-            
+
             document.getElementById('verdict').innerText = verdict;
         }
 
@@ -212,10 +297,8 @@
             document.getElementById('resultSection').classList.add('hidden');
             document.getElementById('inputSection').classList.remove('hidden');
             document.getElementById('herName').value = '';
-            document.getElementById('herDob').value = '';
-            document.getElementById('yourName').value = '';
-            document.getElementById('yourDob').value = '';
         }
     </script>
 </body>
+
 </html>
