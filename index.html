@@ -387,31 +387,65 @@
         }
 
         function shareResult() {
+            const herName = document.getElementById('herName').value.trim();
+            const herBirthDateValue = document.getElementById('herBirthDate').value;
+            const yourName = document.getElementById('yourName').value.trim();
+
+            // Encode params
+            const params = new URLSearchParams({
+                h: herName,
+                d: herBirthDateValue,
+                y: yourName
+            });
+
+            const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+
             const score = document.getElementById('score').innerText;
             const verdict = document.getElementById('verdict').innerText;
-            const text = `Ho calcolato la compatibilità su Love & Vibes! 💘\nRisultato: ${score}%\nVerdetto: ${verdict}\n\nScopri il tuo!`;
+            const text = `Ho calcolato la compatibilità su Love & Vibes! 💘\nRisultato: ${score}%\nVerdetto: ${verdict}\n\nScopri il tuo qui: ${shareUrl}`;
 
             if (navigator.share) {
                 navigator.share({
                     title: 'Love & Vibes Result',
                     text: text,
-                    url: window.location.href,
+                    url: shareUrl,
                 })
                     .then(() => console.log('Successful share'))
                     .catch((error) => console.log('Error sharing', error));
             } else {
                 // Fallback: copia negli appunti
                 navigator.clipboard.writeText(text).then(() => {
-                    alert("Risultato copiato negli appunti! Incollalo dove vuoi. 📋");
+                    alert("Link copiato! 📋\n" + shareUrl);
                 });
             }
         }
 
         function reset() {
+            // Clear URL params without reload
+            window.history.pushState({}, document.title, window.location.pathname);
+
             document.getElementById('resultSection').classList.add('hidden');
             document.getElementById('inputSection').classList.remove('hidden');
             document.getElementById('herName').value = '';
+            // keep other inputs maybe? nah clear her name is enough
         }
+
+        // Check for URL params on load
+        window.addEventListener('load', () => {
+            const params = new URLSearchParams(window.location.search);
+            const h = params.get('h');
+            const d = params.get('d');
+            const y = params.get('y');
+
+            if (h && d && y) {
+                document.getElementById('herName').value = h;
+                document.getElementById('herBirthDate').value = d;
+                document.getElementById('yourName').value = y;
+                // Auto run
+                analizza();
+            }
+        });
+
     </script>
 </body>
 
