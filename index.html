@@ -37,11 +37,15 @@
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">Il nome di lei</label>
                     <input type="text" id="herName" placeholder="Es. Giulia" class="w-full bg-gray-100 border-2 border-transparent focus:border-pink-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mt-3 mb-1 ml-1">Data di nascita di lei</label>
+                    <input type="date" id="herDob" class="w-full bg-gray-100 border-2 border-transparent focus:border-pink-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
                 </div>
                 
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 ml-1">Il tuo nome</label>
                     <input type="text" id="yourName" placeholder="Es. Marco" class="w-full bg-gray-100 border-2 border-transparent focus:border-purple-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mt-3 mb-1 ml-1">La tua data di nascita</label>
+                    <input type="date" id="yourDob" class="w-full bg-gray-100 border-2 border-transparent focus:border-purple-500 focus:bg-white rounded-xl px-4 py-3 outline-none transition-all font-semibold text-gray-700">
                 </div>
 
                 <button onclick="analizza()" class="w-full bg-black text-white font-bold py-4 rounded-xl mt-4 hover:scale-[1.02] active:scale-95 transition-transform shadow-lg flex items-center justify-center gap-2">
@@ -125,9 +129,11 @@
         function analizza() {
             const herName = document.getElementById('herName').value.trim();
             const yourName = document.getElementById('yourName').value.trim();
+            const herDob = document.getElementById('herDob').value;
+            const yourDob = document.getElementById('yourDob').value;
 
-            if (!herName || !yourName) {
-                alert("Devi inserire entrambi i nomi, genio!");
+            if (!herName || !yourName || !herDob || !yourDob) {
+                alert("Devi inserire nomi e date di nascita, genio!");
                 return;
             }
 
@@ -137,11 +143,11 @@
 
             // Simula attesa calcolo
             setTimeout(() => {
-                showResults(herName, yourName);
+                showResults(herName, yourName, herDob, yourDob);
             }, 2000);
         }
 
-        function showResults(herName, yourName) {
+        function showResults(herName, yourName, herDob, yourDob) {
             document.getElementById('loading').classList.add('hidden');
             document.getElementById('resultSection').classList.remove('hidden');
 
@@ -169,8 +175,8 @@
                 list.appendChild(li);
             });
 
-            // 2. Calcola compatibilità basata sulla combinazione dei nomi
-            const combinedHash = stringToHash((herName + yourName).toLowerCase());
+            // 2. Calcola compatibilità basata sulla combinazione dei nomi e delle date
+            const combinedHash = stringToHash((herName + herDob + yourName + yourDob).toLowerCase());
             const percentage = (combinedHash % 101); // 0 a 100
 
             // Anima il numero
@@ -206,6 +212,9 @@
             document.getElementById('resultSection').classList.add('hidden');
             document.getElementById('inputSection').classList.remove('hidden');
             document.getElementById('herName').value = '';
+            document.getElementById('herDob').value = '';
+            document.getElementById('yourName').value = '';
+            document.getElementById('yourDob').value = '';
         }
     </script>
 </body>
